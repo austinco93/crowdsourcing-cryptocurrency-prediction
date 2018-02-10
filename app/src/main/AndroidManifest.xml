@@ -9,14 +9,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HomeActivity">
+        <activity
+            android:name=".HomeActivity"
+            android:label="Home"></activity>
+        <activity
+            android:name=".admin.AdminActivity"
+            android:label="Admin"></activity>
+        <activity android:name=".SplashActivity"
+            android:label="Login/Register">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".admin.AdminActivity"></activity>
     </application>
 
 </manifest>
