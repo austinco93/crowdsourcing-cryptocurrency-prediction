@@ -1,0 +1,1 @@
+All android receiver class will be here.
