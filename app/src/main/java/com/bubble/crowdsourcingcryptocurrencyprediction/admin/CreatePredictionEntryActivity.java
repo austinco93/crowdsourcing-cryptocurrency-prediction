@@ -92,9 +92,9 @@ public class CreatePredictionEntryActivity extends AppCompatActivity implements 
             String key = ref.getKey();
             double creationDate = (double) System.currentTimeMillis();
             double expirationDate = creationDate + (double) expireTime[spinnerPredictionType.getSelectedItemPosition()];
-            Log.d("tonmoy", "creationDate :"+creationDate);
-            Log.d("tonmoy", "expirationDate :"+expirationDate);
-            PredictionEntry entry = new PredictionEntry(key, editTextQuestion.getText().toString(), optionsHashMap, editTextMaxPoint.getText().toString(), creationDate, expirationDate);
+            Log.d("tonmoy", "creationDate :" + creationDate);
+            Log.d("tonmoy", "expirationDate :" + expirationDate);
+            PredictionEntry entry = new PredictionEntry(key, editTextQuestion.getText().toString(), optionsHashMap, Integer.parseInt(editTextMaxPoint.getText().toString()), creationDate, expirationDate, mCryptoSet);
             ref.setValue(entry);
 
 

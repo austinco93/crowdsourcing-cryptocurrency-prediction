@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.bubble.crowdsourcingcryptocurrencyprediction.admin.CreatePredictionEntryActivity;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
@@ -39,7 +40,7 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
         mAuth = FirebaseAuth.getInstance();
         FirebaseAuth auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() != null) {
-           startActivity(new Intent(SplashActivity.this, HomeActivity.class));
+           startActivity(new Intent(SplashActivity.this, PredictionListActivity.class));
            // startActivity(new Intent(SplashActivity.this, AddQuestionActivity.class));
             finish();
         } else {

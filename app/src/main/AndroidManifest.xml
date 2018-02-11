@@ -14,23 +14,24 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".HomeActivity"
-            android:label="Home"/>
+            android:label="Home" />
         <activity
             android:name=".admin.AdminActivity"
-            android:label="Admin"/>
+            android:label="Admin" />
         <activity
             android:name=".SplashActivity"
             android:label="Login/Register">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PredictionActivity"/>
+        <activity android:name=".PredictionActivity" />
         <activity android:name=".admin.CreatePredictionEntryActivity"/>
-        <activity android:name=".PredictionListActivity">
-        </activity>
+        <activity android:name=".PredictionListActivity"/>
+
+        <activity android:name=".PredictionResultActivity"></activity>
     </application>
 
 </manifest>

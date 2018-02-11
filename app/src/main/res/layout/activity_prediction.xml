@@ -14,10 +14,10 @@
         android:id="@+id/textviewQuestion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:layout_marginLeft="@dimen/general_margin"
         android:layout_marginRight="@dimen/general_margin"
         android:layout_marginTop="32dp"
-        android:layout_marginBottom="16dp"
         android:text="Prediction"
         android:textColor="@android:color/black"
         android:textSize="24sp"
@@ -36,9 +36,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="32dp"
-        android:textStyle="bold"
+        android:text="User Rational for this prediction"
         android:textColor="@android:color/black"
-        android:text="User Rational for this prediction" />
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/editTextOther"
@@ -46,7 +46,21 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="32dp"
         android:ems="10"
-        android:inputType="textPersonName"
-         />
+        android:inputType="textPersonName" />
+
+    <Button
+        android:id="@+id/buttonSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/general_margin"
+        android:text="Submit" />
+
+    <Button
+        android:id="@+id/buttonOtherPrediction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:layout_margin="@dimen/general_margin"
+        android:text="View all peoples prediction" />
 
 </LinearLayout>
