@@ -28,13 +28,28 @@
             android:textSize="16dp"/>
     </RelativeLayout>
 
-
-    <LinearLayout
-        android:id="@+id/news_fragment"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_weight="7"
-        android:orientation="horizontal"></LinearLayout>
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/news_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/news_section_title"
+            android:orientation="horizontal"></LinearLayout>
+
+        <TextView
+            android:id="@+id/news_section_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Coin News"
+            android:background="@color/md_blue_grey_800"
+            android:textColor="@color/WHITE"
+            android:textSize="16dp"/>
+    </RelativeLayout>
 
 
 </LinearLayout>
