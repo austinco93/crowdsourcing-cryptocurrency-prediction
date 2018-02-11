@@ -52,10 +52,31 @@ public class ParseNews extends AsyncTask<String, Void, String> {
                 //Log.i("author",article.get("author").getAsString());
                 //Log.i("url",article.get("url").getAsString());
                 //Log.i("urlToImage",article.get("urlToImage").getAsString());
-                temp.put("title",article.get("title").getAsString());
-                temp.put("description",article.get("description").getAsString());
-                temp.put("url",article.get("url").getAsString());
-                temp.put("urlToImage",article.get("urlToImage").getAsString());
+                if(article.get("title") != null) {
+                    temp.put("title", article.get("title").getAsString());
+                } else {
+                    temp.put("title","");
+                }
+
+                if(article.get("description") != null){
+                    temp.put("description",article.get("description").getAsString());
+                } else {
+                    temp.put("description","");
+                }
+
+                if(article.get("url") != null){
+                    temp.put("url",article.get("url").getAsString());
+                } else {
+                    temp.put("url","");
+                }
+
+                if(article.get("urlToImage") != null) {
+                    temp.put("urlToImage", article.get("urlToImage").toString());
+                    Log.i("test", temp.get("urlToImage"));
+                } else {
+                    temp.put("urlToImage","");
+                }
+
                 articleList.add(temp);
             }
         }

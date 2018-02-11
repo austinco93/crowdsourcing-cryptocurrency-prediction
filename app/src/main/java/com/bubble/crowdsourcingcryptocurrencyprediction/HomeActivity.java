@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.bubble.crowdsourcingcryptocurrencyprediction.fragments.NewsFragment;
 import com.bubble.crowdsourcingcryptocurrencyprediction.fragments.PriceLineChart;
 import com.bubble.crowdsourcingcryptocurrencyprediction.utilities.NewsFetcherInterface;
 import com.bubble.crowdsourcingcryptocurrencyprediction.utilities.ParseNews;
@@ -20,6 +21,8 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.utils.EntryXComparator;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 
 import java.util.ArrayList;
@@ -38,8 +41,9 @@ public class HomeActivity extends AppCompatActivity implements NewsFetcherInterf
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
-        newsUrl = "https://newsapi.org/v2/everything?q=bitcoin&sortBy=publishedAt&apiKey=66b0258bac8c46a080eeac9e80af22f2";
+        ImageLoader imageLoader = ImageLoader.getInstance();
+        imageLoader.init(ImageLoaderConfiguration.createDefault(this));
+        newsUrl = "https://newsapi.org/v2/everything?q=bitcoin&language=en&sortBy=publishedAt&apiKey=66b0258bac8c46a080eeac9e80af22f2";
         cryptoUrl = "https://api.coinmarketcap.com/v1/ticker/bitcoin";
         cryptoUrl2 = "https://api.coindesk.com/v1/bpi/historical/close.json";
 
@@ -47,7 +51,7 @@ public class HomeActivity extends AppCompatActivity implements NewsFetcherInterf
         ParsePrice price = new ParsePrice(this);
         ParseNews news = new ParseNews(this);
         price.execute(cryptoUrl2);
-        // news.execute(newsUrl);
+        news.execute(newsUrl);
     }
 
     @Override
@@ -71,5 +75,15 @@ public class HomeActivity extends AppCompatActivity implements NewsFetcherInterf
     public void onNewsFinishFetcher(ArrayList<HashMap<String, String>> data) {
         articles = data;
         Log.i("key", data.get(1).get("title"));
+        NewsFragment chart = new NewsFragment();
+        Bundle args = new Bundle(0);
+        args.putSerializable("test",data);
+        chart.setArguments(args);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.news_fragment, chart);
+        transaction.addToBackStack(null);
+
+        transaction.commit();
     }
 }
