@@ -48,7 +48,7 @@ public class HomeActivity extends AppCompatActivity implements NewsFetcherInterf
         newsUrl = "https://newsapi.org/v2/everything?q=bitcoin&language=en&sortBy=publishedAt&apiKey=66b0258bac8c46a080eeac9e80af22f2";
         textviewTitle = (TextView)findViewById(R.id.btc_chart_title);
 
-        newsUrl = "https://newsapi.org/v2/everything?q=bitcoin&sortBy=publishedAt&apiKey=66b0258bac8c46a080eeac9e80af22f2";
+        //newsUrl = "https://newsapi.org/v2/everything?q=bitcoin&sortBy=publishedAt&apiKey=66b0258bac8c46a080eeac9e80af22f2";
         cryptoUrl = "https://api.coinmarketcap.com/v1/ticker/bitcoin";
         cryptoUrl2 = "https://api.coindesk.com/v1/bpi/historical/close.json";
 
