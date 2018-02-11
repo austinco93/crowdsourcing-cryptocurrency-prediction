@@ -2,10 +2,12 @@ package com.bubble.crowdsourcingcryptocurrencyprediction;
 
 import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.bubble.crowdsourcingcryptocurrencyprediction.fragments.PriceLineChart;
 import com.bubble.crowdsourcingcryptocurrencyprediction.utilities.NewsFetcherInterface;
 import com.bubble.crowdsourcingcryptocurrencyprediction.utilities.ParseNews;
 import com.bubble.crowdsourcingcryptocurrencyprediction.utilities.ParsePrice;
@@ -45,13 +47,23 @@ public class HomeActivity extends AppCompatActivity implements NewsFetcherInterf
         ParsePrice price = new ParsePrice(this);
         ParseNews news = new ParseNews(this);
         price.execute(cryptoUrl2);
-        news.execute(newsUrl);
+        // news.execute(newsUrl);
     }
 
     @Override
     public void onPriceFinishFetcher(HashMap<String, String> data) {
         prices = data;
         Log.i("key", prices.get("2018-01-11"));
+        PriceLineChart chart = new PriceLineChart();
+        Bundle args = new Bundle(0);
+        args.putSerializable("hashmap",data);
+        chart.setArguments(args);
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.btc_price_fragment, chart);
+        transaction.addToBackStack(null);
+
+        transaction.commit();
     }
 
 

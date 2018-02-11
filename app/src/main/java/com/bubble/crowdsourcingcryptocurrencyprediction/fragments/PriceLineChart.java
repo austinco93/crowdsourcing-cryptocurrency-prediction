@@ -1,6 +1,6 @@
 package com.bubble.crowdsourcingcryptocurrencyprediction.fragments;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -23,6 +23,7 @@ import com.github.mikephil.charting.utils.EntryXComparator;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -32,20 +33,24 @@ import java.util.List;
 public class PriceLineChart extends Fragment {
 
     private static final ArrayList<DataPoint> myList = new ArrayList<DataPoint>() {{
-        add(new DataPoint(1,3));
-        add(new DataPoint(4,10));
-        add(new DataPoint(2,5));
+        add(new DataPoint(1,2));
     }};
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        // Grab data passed from main activity
+        HashMap<String,String> data = new HashMap<String,String>();
+        Bundle b = this.getArguments();
+        if(b != null && b.getSerializable("hashmap") != null) {
+            data = (HashMap<String, String>) b.getSerializable("hashmap");
+        }
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.price_linechart, container, false);
 
         LineChart chart = (LineChart) view.findViewById(R.id.test_chart);
-
         configureChart(chart);
         configureAxes(chart);
 
