@@ -30,12 +30,14 @@ public class CustomList extends ArrayAdapter<String>{
     private final Activity context;
     private final String[] web;
     private final String[] imageId;
+    private final String[] urls;
     public CustomList(Activity context,
-                      String[] web, String[] imageId) {
+                      String[] web, String[] imageId, String[] urls) {
         super(context, R.layout.list_single, web);
         this.context = context;
         this.web = web;
         this.imageId = imageId;
+        this.urls = urls;
 
     }
     @Override

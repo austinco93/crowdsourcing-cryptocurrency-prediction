@@ -1,5 +1,7 @@
 package com.bubble.crowdsourcingcryptocurrencyprediction.fragments;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.graphics.Color;
@@ -54,7 +56,13 @@ public class NewsFragment extends Fragment {
         String[] images = new String[data.size()];
         for(int i = 0; i < data.size(); i++){
             images[i] = data.get(i).get("urlToImage");
-            Log.i("test2", images[i]);
+            //Log.i("test2", images[i]);
+        }
+
+        final String[] urls = new String[data.size()];
+        for(int i = 0; i < data.size(); i++){
+            urls[i] = data.get(i).get("url");
+            //Log.i("test2", images[i]);
         }
 
 
@@ -64,7 +72,7 @@ public class NewsFragment extends Fragment {
         //ListView list = view.findViewById(R.id.newsList);
 
 
-        CustomList adapter = new CustomList(getActivity(), titles, images);
+        CustomList adapter = new CustomList(getActivity(), titles, images, urls);
         ListView list = view.findViewById(R.id.newsList);
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -72,7 +80,11 @@ public class NewsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
+                String url = urls[position];
 
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
 
             }
         });
