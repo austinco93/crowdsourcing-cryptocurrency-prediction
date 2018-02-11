@@ -3,8 +3,6 @@ package com.bubble.crowdsourcingcryptocurrencyprediction.utilities;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.apache.commons.io.IOUtils;
@@ -13,7 +11,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
