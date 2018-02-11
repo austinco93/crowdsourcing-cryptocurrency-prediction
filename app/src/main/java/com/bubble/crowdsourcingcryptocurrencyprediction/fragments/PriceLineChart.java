@@ -1,30 +1,36 @@
 package com.bubble.crowdsourcingcryptocurrencyprediction.fragments;
 
 import android.support.v4.app.Fragment;
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.bubble.crowdsourcingcryptocurrencyprediction.DataPoint;
 import com.bubble.crowdsourcingcryptocurrencyprediction.R;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.utils.EntryXComparator;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by webert3 on 2/10/18.
@@ -32,9 +38,12 @@ import java.util.List;
 
 public class PriceLineChart extends Fragment {
 
-    private static final ArrayList<DataPoint> myList = new ArrayList<DataPoint>() {{
-        add(new DataPoint(1,2));
-    }};
+    public static final SimpleDateFormat json_formatter = new SimpleDateFormat("yyyy-MM-dd");
+    private static final SimpleDateFormat chart_formatter = new SimpleDateFormat("MM/dd");
+    public static final SimpleDateFormat title_formatter = new SimpleDateFormat("MM/dd/yyyy");
+    // TODO: This is unnecessary, fix this later.
+    View view;
+    View outer_view;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,14 +57,15 @@ public class PriceLineChart extends Fragment {
         }
 
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.price_linechart, container, false);
+        view = inflater.inflate(R.layout.price_linechart, container, false);
+        outer_view = inflater.inflate(R.layout.activity_home, container, false);
 
         LineChart chart = (LineChart) view.findViewById(R.id.test_chart);
         configureChart(chart);
         configureAxes(chart);
 
         // Prep data
-        LineData lineData = new LineData(style_dataset(create_entries()));
+        LineData lineData = new LineData(style_dataset(create_entries(data)));
 
         // Draw data to chart.
         chart.setData(lineData);
@@ -78,6 +88,7 @@ public class PriceLineChart extends Fragment {
         xAxis.setDrawGridLines(false);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setTextColor(getResources().getColor(R.color.DEFAULT_WHITE));
+        xAxis.setValueFormatter(new MyXAxisValueFormatter());
 
         YAxis yAxis = chart.getAxis(YAxis.AxisDependency.LEFT);
         chart.getAxisRight().setEnabled(false);
@@ -89,15 +100,41 @@ public class PriceLineChart extends Fragment {
     }
 
     @NonNull
-    private LineDataSet create_entries() {
+    private LineDataSet create_entries(HashMap<String, String> data) {
         List<Entry> entries = new ArrayList<Entry>();
-        for (DataPoint dp : myList) {
-            entries.add(new Entry(dp.x, dp.y));
+        for (Map.Entry<String, String> entry : data.entrySet()) {
+            // Might need to convert key
+            entries.add(new Entry(string_to_UTS(entry.getKey()), Float.parseFloat(entry.getValue()
+            )));
         }
 
         // Have to sort the entries I think?
         Collections.sort(entries, new EntryXComparator());
+
+        setChartTitle(entries.get(0).getX());
+
         return new LineDataSet(entries, "BTC");
+    }
+
+
+    // TODO: Broken. Ask Monsur for help :^)
+    private void setChartTitle(float uts) {
+        String last_date = title_formatter.format(uts);
+
+        TextView textviewTitle = (TextView) outer_view.findViewById(R.id.btc_chart_title);
+        textviewTitle.setText("BTC Closing Prices Since "+last_date);
+        textviewTitle.setTextColor(getResources().getColor(R.color.WHITE));
+    }
+
+    private float string_to_UTS(String date_str) {
+        Date date = null;
+        try {
+            date = json_formatter.parse(date_str);
+        } catch (ParseException e) {
+            Log.i("PRICE LINECHART", "Unable to parse date...");
+        }
+
+        return date.getTime();
     }
 
     private LineDataSet style_dataset(LineDataSet dataSet) {
@@ -111,6 +148,13 @@ public class PriceLineChart extends Fragment {
         dataSet.setDrawValues(false);
 
         return dataSet;
+    }
+
+    private class MyXAxisValueFormatter implements IAxisValueFormatter {
+        @Override
+        public String getFormattedValue(float value, AxisBase axis) {
+            return chart_formatter.format(new Date((long)value));
+        }
     }
 }
 
