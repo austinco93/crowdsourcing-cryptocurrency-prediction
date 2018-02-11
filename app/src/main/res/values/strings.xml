@@ -12,4 +12,5 @@
         <item>6hour"</item>
         <item>1hour</item>
     </string-array>
+    <string name="title_activity_prediction_result">PredictionResultActivity</string>
 </resources>

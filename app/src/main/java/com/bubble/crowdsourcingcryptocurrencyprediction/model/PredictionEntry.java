@@ -11,17 +11,19 @@ public class PredictionEntry {
     public String id;
     public String text;
     public Map<String, String> options = new HashMap<String, String>();
-    public String maxPoint;
+    public int maxPoint;
     public double createdTimeUTC;
     public double expireTimeUTC;
+    public String currency;
 
-    public PredictionEntry(String id, String text, Map<String, String> map, String maxPoint, double createdTimeUTC, double expireTimeUTC) {
+    public PredictionEntry(String id, String text, Map<String, String> map, int maxPoint, double createdTimeUTC, double expireTimeUTC, String currency) {
         this.id = id;
         this.text = text;
         this.options = map;
         this.maxPoint = maxPoint;
         this.createdTimeUTC = createdTimeUTC;
         this.expireTimeUTC = expireTimeUTC;
+        this.currency = currency;
     }
 
     public PredictionEntry() {
