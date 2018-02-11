@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.bubble.crowdsourcingcryptocurrencyprediction.fragments.NewsFragment;
 import com.bubble.crowdsourcingcryptocurrencyprediction.fragments.PriceLineChart;
@@ -36,6 +37,7 @@ public class HomeActivity extends AppCompatActivity implements NewsFetcherInterf
     public static String cryptoUrl2;
     public static HashMap<String,String> prices = new HashMap<String,String>();
     public static ArrayList<HashMap<String,String>> articles = new ArrayList<HashMap<String,String>>();
+    public static TextView textviewTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,9 @@ public class HomeActivity extends AppCompatActivity implements NewsFetcherInterf
         ImageLoader imageLoader = ImageLoader.getInstance();
         imageLoader.init(ImageLoaderConfiguration.createDefault(this));
         newsUrl = "https://newsapi.org/v2/everything?q=bitcoin&language=en&sortBy=publishedAt&apiKey=66b0258bac8c46a080eeac9e80af22f2";
+        textviewTitle = (TextView)findViewById(R.id.btc_chart_title);
+
+        newsUrl = "https://newsapi.org/v2/everything?q=bitcoin&sortBy=publishedAt&apiKey=66b0258bac8c46a080eeac9e80af22f2";
         cryptoUrl = "https://api.coinmarketcap.com/v1/ticker/bitcoin";
         cryptoUrl2 = "https://api.coindesk.com/v1/bpi/historical/close.json";
 

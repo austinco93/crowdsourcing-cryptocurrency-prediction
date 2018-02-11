@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/CrowdsourcingCryptocurrencyPrediction.iml" filepath="$PROJECT_DIR$/CrowdsourcingCryptocurrencyPrediction.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/crowdsourcing-cryptocurrency-prediction.iml" filepath="$PROJECT_DIR$/crowdsourcing-cryptocurrency-prediction.iml" />
     </modules>
   </component>
 </project>

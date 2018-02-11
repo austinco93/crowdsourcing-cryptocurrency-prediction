@@ -7,13 +7,28 @@
     android:orientation="vertical"
     tools:context="com.bubble.crowdsourcingcryptocurrencyprediction.HomeActivity">
 
-    <LinearLayout
-        android:id="@+id/btc_price_fragment"
-        android:orientation="vertical"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="3">
-    </LinearLayout>
+        android:layout_height="240dp"
+        >
+
+        <LinearLayout
+            android:id="@+id/btc_price_fragment"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+>
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:text="BTC Closing Prices"
+            android:textColor="@color/WHITE"
+            android:id="@+id/btc_chart_title"/>
+    </RelativeLayout>
+
 
     <LinearLayout
         android:id="@+id/news_fragment"
