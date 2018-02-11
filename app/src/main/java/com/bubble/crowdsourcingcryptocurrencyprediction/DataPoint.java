@@ -5,8 +5,8 @@ package com.bubble.crowdsourcingcryptocurrencyprediction;
  */
 
 public class DataPoint {
-    int x;
-    int y;
+    public int x;
+    public int y;
 
     public DataPoint(int x, int y) {
         this.x = x;
