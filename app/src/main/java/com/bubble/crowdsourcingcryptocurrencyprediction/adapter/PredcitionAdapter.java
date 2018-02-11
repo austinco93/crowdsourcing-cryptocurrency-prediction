@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bubble.crowdsourcingcryptocurrencyprediction.PredictionActivity;
+import com.bubble.crowdsourcingcryptocurrencyprediction.PredictionResultActivity;
 import com.bubble.crowdsourcingcryptocurrencyprediction.R;
 import com.bubble.crowdsourcingcryptocurrencyprediction.model.RetrievedPredictionEntry;
 
@@ -55,6 +56,11 @@ public class PredcitionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                     Log.d("tonmoy", itemPosition + ":");
                     Intent intent = new Intent(context, PredictionActivity.class);
                     intent.putExtra("data", mList.get(itemPosition));
+
+                    if (mList.get(itemPosition).isExpired.equalsIgnoreCase("true")) {
+                        intent = new Intent(context, PredictionResultActivity.class);
+                        intent.putExtra("data", mList.get(itemPosition));
+                    }
                     context.startActivity(intent);
                 }
             });
@@ -115,8 +121,8 @@ public class PredcitionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 String dateFormat = "MM/dd/yyyy HH:mm";
                 long timeInMilliseconds = (long) entry.expireTimeUTC;
                 long crtTime = (long) entry.createdTimeUTC;
-                double ratio = (timeInMilliseconds-crtTime)/crtTime;
-                double point = entry.maxPoint*ratio;
+                double ratio = (timeInMilliseconds - crtTime) / crtTime;
+                double point = entry.maxPoint * ratio;
 
                 Date now = new Date();
                 final long remainingTime = timeInMilliseconds - now.getTime();
@@ -132,7 +138,7 @@ public class PredcitionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
                 ((MyViewHolder) holder).textViewTimeRemaining.setText(remainingStr);
                 ((MyViewHolder) holder).textViewDueDate.setText(getDate(timeInMilliseconds, dateFormat));
-                ((MyViewHolder) holder).textviewPoint.setText( entry.maxPoint+ "");
+                ((MyViewHolder) holder).textviewPoint.setText(entry.maxPoint + "");
                 ((MyViewHolder) holder).image.setImageResource(map.get(entry.currency));
                 new CountDownTimer(remainingTime, 1000) {
 
@@ -154,8 +160,7 @@ public class PredcitionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         if (Hours > 0) {
                             str += String.format("%02d h\n", Hours);
                             ((MyViewHolder) holder).textViewTimeRemaining.setTextColor(ContextCompat.getColor(context, R.color.AMBER));
-                            if(Hours<6)
-                            {
+                            if (Hours < 6) {
                                 ((MyViewHolder) holder).textViewTimeRemaining.setTextColor(ContextCompat.getColor(context, R.color.less_opaque_red));
                             }
 
