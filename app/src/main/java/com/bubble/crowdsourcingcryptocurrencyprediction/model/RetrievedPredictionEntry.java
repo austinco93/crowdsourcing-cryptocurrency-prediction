@@ -19,6 +19,7 @@ public class RetrievedPredictionEntry implements Serializable {
     public double createdTimeUTC;
     public double expireTimeUTC;
     public String mCryptoSet ="";
+    public String isExpired ="false";
 
     public RetrievedPredictionEntry(String id, String text, List<String> map, int maxPoint, double createdTimeUTC, double expireTimeUTC, String currency) {
         this.id = id;

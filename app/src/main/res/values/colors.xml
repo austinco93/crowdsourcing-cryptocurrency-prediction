@@ -7,6 +7,9 @@
     <!-- Misc. -->
     <color name="BLACK">#000000</color>
 
+    <color name="GREEN">#4CAF50</color>
+    <color name="AMBER">#FFC107</color>
+
     <!-- Calendar Stress Colors -->
     <color name="STRESS_0.9">#ff3300</color>
     <color name="STRESS_0.8">#ff6600</color>

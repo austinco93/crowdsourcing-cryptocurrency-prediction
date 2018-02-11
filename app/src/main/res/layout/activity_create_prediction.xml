@@ -26,12 +26,28 @@
                 android:layout_marginTop="16dp"
                 android:entries="@array/prediction_type" />
 
-            <Spinner
-                android:id="@+id/spinnerCryptoType"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:entries="@array/crypto_type" />
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/spinnerCryptoType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:entries="@array/crypto_type" />
+
+                <TextView
+                    android:id="@+id/textviewCoinPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="12000$"
+                    android:textColor="@color/GREEN"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
 
             <EditText
                 android:id="@+id/editTextPoint"
