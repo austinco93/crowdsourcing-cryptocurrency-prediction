@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import com.bubble.crowdsourcingcryptocurrencyprediction.admin.CreatePredictionEntryActivity;
 import com.bubble.crowdsourcingcryptocurrencyprediction.fragments.NewsFragment;
 import com.bubble.crowdsourcingcryptocurrencyprediction.fragments.PriceLineChart;
 import com.bubble.crowdsourcingcryptocurrencyprediction.utilities.CurrPriceFetcherInterface;
@@ -70,6 +71,9 @@ public class HomeActivity extends AppCompatActivity implements NewsFetcherInterf
         if (id == R.id.makePrediction) {
             Log.i("MENU", "it works.");
             startActivity(new Intent(this, PredictionListActivity.class));
+        }
+        if (id == R.id.admin) {
+            startActivity(new Intent(this, CreatePredictionEntryActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }

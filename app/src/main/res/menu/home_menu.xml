@@ -7,4 +7,10 @@
     app:showAsAction="always"
     android:icon="@drawable/plus"
     />
+    <item
+        android:id="@+id/admin"
+        android:title="Admin"
+        app:showAsAction="always"
+        android:icon="@drawable/admin"
+        />
 </menu>

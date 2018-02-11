@@ -40,7 +40,7 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
         mAuth = FirebaseAuth.getInstance();
         FirebaseAuth auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() != null) {
-           startActivity(new Intent(SplashActivity.this, CreatePredictionEntryActivity.class));
+           startActivity(new Intent(SplashActivity.this, HomeActivity.class));
            // startActivity(new Intent(SplashActivity.this, AddQuestionActivity.class));
             finish();
         } else {
