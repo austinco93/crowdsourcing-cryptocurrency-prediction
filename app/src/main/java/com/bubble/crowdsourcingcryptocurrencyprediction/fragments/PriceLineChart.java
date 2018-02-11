@@ -46,12 +46,10 @@ public class PriceLineChart extends Fragment {
     public static final SimpleDateFormat title_formatter = new SimpleDateFormat("MM/dd/yyyy");
     private PriceMarkerView mv;
     private LineChart mChart;
-    View view;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         // Grab data passed from main activity
         HashMap<String,String> data = new HashMap<String,String>();
         Bundle b = this.getArguments();
@@ -60,10 +58,11 @@ public class PriceLineChart extends Fragment {
         }
 
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.price_linechart, container, false);
+        View view = inflater.inflate(R.layout.price_linechart, container, false);
 
         mChart = (LineChart) view.findViewById(R.id.test_chart);
         mChart.setMarker(mv);
+
         configureChart();
         configureAxes();
 
@@ -86,11 +85,10 @@ public class PriceLineChart extends Fragment {
 
     private void configureChart() {
         mChart.setBackgroundColor(getResources().getColor(R.color.md_blue_grey_800));
-
-        // Getting rid of the chart label... lol
         Description d = new Description();
-        d.setText("");
+        d.setText(""); // Getting rid of the chart label... lol
         mChart.setDescription(d);
+        mChart.getLegend().setTextColor(getResources().getColor(R.color.WHITE));
     }
 
     private void configureAxes() {
@@ -107,27 +105,23 @@ public class PriceLineChart extends Fragment {
         yAxis.setDrawLabels(true);
         yAxis.setDrawGridLines(true);
         yAxis.setDrawLimitLinesBehindData(false);
+        yAxis.setValueFormatter(new MyYAxisValueFormatter());
     }
 
     @NonNull
     private LineDataSet create_entries(HashMap<String, String> data) {
         List<Entry> entries = new ArrayList<Entry>();
         for (Map.Entry<String, String> entry : data.entrySet()) {
-            // Might need to convert key
-            entries.add(new Entry(string_to_UTS(entry.getKey()), Float.parseFloat(entry.getValue()
-            )));
+            entries.add(new Entry(string_to_UTS(entry.getKey()), Float.parseFloat(entry.getValue())));
         }
 
         // Have to sort the entries I think?
         Collections.sort(entries, new EntryXComparator());
-
         setChartTitle(entries.get(0).getX());
 
         return new LineDataSet(entries, "BTC");
     }
 
-
-    // TODO: Broken. Ask Monsur for help :^)
     private void setChartTitle(float uts) {
         HomeActivity.textviewTitle.setText("BTC Closing Prices Since "+title_formatter.format(uts));
         HomeActivity.textviewTitle.setTextColor(getResources().getColor(R.color.WHITE));
@@ -161,6 +155,13 @@ public class PriceLineChart extends Fragment {
         @Override
         public String getFormattedValue(float value, AxisBase axis) {
             return chart_formatter.format(new Date((long)value));
+        }
+    }
+
+    private class MyYAxisValueFormatter implements IAxisValueFormatter {
+        @Override
+        public String getFormattedValue(float value, AxisBase axis) {
+            return String.format("$%.0f", value);
         }
     }
 }
