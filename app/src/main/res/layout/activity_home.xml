@@ -9,24 +9,29 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        >
+        android:layout_height="300dp">
 
         <LinearLayout
             android:id="@+id/btc_price_fragment"
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
->
-        </LinearLayout>
+            android:orientation="vertical"></LinearLayout>
+
         <TextView
+            android:id="@+id/btc_chart_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:gravity="center"
             android:text="BTC Closing Prices"
-            android:textColor="@color/WHITE"
-            android:id="@+id/btc_chart_title"/>
+            android:textColor="@color/WHITE" />
+
+        <Button
+            android:id="@+id/buttonPredict"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:text="Predict" />
     </RelativeLayout>
 
 

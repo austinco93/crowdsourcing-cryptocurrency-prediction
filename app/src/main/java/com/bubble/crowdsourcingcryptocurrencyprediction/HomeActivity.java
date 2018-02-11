@@ -1,11 +1,14 @@
 package com.bubble.crowdsourcingcryptocurrencyprediction;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.bubble.crowdsourcingcryptocurrencyprediction.fragments.NewsFragment;
@@ -31,13 +34,14 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-public class HomeActivity extends AppCompatActivity implements NewsFetcherInterface,PriceFetcherInterface{
+public class HomeActivity extends AppCompatActivity implements NewsFetcherInterface, PriceFetcherInterface, View.OnClickListener {
     public static String newsUrl;
     public static String cryptoUrl;
     public static String cryptoUrl2;
-    public static HashMap<String,String> prices = new HashMap<String,String>();
-    public static ArrayList<HashMap<String,String>> articles = new ArrayList<HashMap<String,String>>();
+    public static HashMap<String, String> prices = new HashMap<String, String>();
+    public static ArrayList<HashMap<String, String>> articles = new ArrayList<HashMap<String, String>>();
     public static TextView textviewTitle;
+    Button buttonPredict;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +50,9 @@ public class HomeActivity extends AppCompatActivity implements NewsFetcherInterf
         ImageLoader imageLoader = ImageLoader.getInstance();
         imageLoader.init(ImageLoaderConfiguration.createDefault(this));
         newsUrl = "https://newsapi.org/v2/everything?q=bitcoin&language=en&sortBy=publishedAt&apiKey=66b0258bac8c46a080eeac9e80af22f2";
-        textviewTitle = (TextView)findViewById(R.id.btc_chart_title);
+        textviewTitle = (TextView) findViewById(R.id.btc_chart_title);
+        buttonPredict = (Button) findViewById(R.id.buttonPredict);
+        buttonPredict.setOnClickListener(this);
 
         //newsUrl = "https://newsapi.org/v2/everything?q=bitcoin&sortBy=publishedAt&apiKey=66b0258bac8c46a080eeac9e80af22f2";
         cryptoUrl = "https://api.coinmarketcap.com/v1/ticker/bitcoin";
@@ -65,7 +71,7 @@ public class HomeActivity extends AppCompatActivity implements NewsFetcherInterf
         Log.i("key", prices.get("2018-01-11"));
         PriceLineChart chart = new PriceLineChart();
         Bundle args = new Bundle(0);
-        args.putSerializable("hashmap",data);
+        args.putSerializable("hashmap", data);
         chart.setArguments(args);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -82,7 +88,7 @@ public class HomeActivity extends AppCompatActivity implements NewsFetcherInterf
         Log.i("key", data.get(1).get("title"));
         NewsFragment chart = new NewsFragment();
         Bundle args = new Bundle(0);
-        args.putSerializable("test",data);
+        args.putSerializable("test", data);
         chart.setArguments(args);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -90,5 +96,12 @@ public class HomeActivity extends AppCompatActivity implements NewsFetcherInterf
         transaction.addToBackStack(null);
 
         transaction.commit();
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view == buttonPredict) {
+            startActivity(new Intent(this, PredictionListActivity.class));
+        }
     }
 }
