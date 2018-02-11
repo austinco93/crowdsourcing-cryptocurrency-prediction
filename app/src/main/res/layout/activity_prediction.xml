@@ -61,6 +61,6 @@
         android:layout_height="wrap_content"
         android:enabled="false"
         android:layout_margin="@dimen/general_margin"
-        android:text="View all peoples prediction" />
+        android:text="View all predictions" />
 
 </LinearLayout>

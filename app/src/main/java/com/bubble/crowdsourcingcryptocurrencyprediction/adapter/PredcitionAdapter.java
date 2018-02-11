@@ -114,6 +114,9 @@ public class PredcitionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 ((MyViewHolder) holder).title.setText(entry.text);
                 String dateFormat = "MM/dd/yyyy HH:mm";
                 long timeInMilliseconds = (long) entry.expireTimeUTC;
+                long crtTime = (long) entry.createdTimeUTC;
+                double ratio = (timeInMilliseconds-crtTime)/crtTime;
+                double point = entry.maxPoint*ratio;
 
                 Date now = new Date();
                 final long remainingTime = timeInMilliseconds - now.getTime();
@@ -129,7 +132,7 @@ public class PredcitionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
                 ((MyViewHolder) holder).textViewTimeRemaining.setText(remainingStr);
                 ((MyViewHolder) holder).textViewDueDate.setText(getDate(timeInMilliseconds, dateFormat));
-                ((MyViewHolder) holder).textviewPoint.setText(entry.maxPoint + "");
+                ((MyViewHolder) holder).textviewPoint.setText( entry.maxPoint+ "");
                 ((MyViewHolder) holder).image.setImageResource(map.get(entry.currency));
                 new CountDownTimer(remainingTime, 1000) {
 
