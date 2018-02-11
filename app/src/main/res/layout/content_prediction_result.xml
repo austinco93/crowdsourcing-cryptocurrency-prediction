@@ -44,11 +44,6 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-    <com.github.mikephil.charting.charts.HorizontalBarChart
-        android:id="@+id/chart"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
     <TextView
         android:id="@+id/textViewOption1"
         android:layout_width="match_parent"

@@ -4,9 +4,14 @@ import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.bubble.crowdsourcingcryptocurrencyprediction.fragments.NewsFragment;
@@ -33,7 +38,6 @@ public class HomeActivity extends AppCompatActivity implements NewsFetcherInterf
     public static ArrayList<HashMap<String, String>> articles = new ArrayList<HashMap<String,
             String>>(), coins = new ArrayList<HashMap<String, String>>();
     public static TextView textviewTitle;
-    Button buttonPredict;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +46,6 @@ public class HomeActivity extends AppCompatActivity implements NewsFetcherInterf
         ImageLoader imageLoader = ImageLoader.getInstance();
         imageLoader.init(ImageLoaderConfiguration.createDefault(this));
         textviewTitle = (TextView) findViewById(R.id.btc_chart_title);
-        buttonPredict = (Button) findViewById(R.id.buttonPredict);
-        buttonPredict.setOnClickListener(this);
 
         ParsePrice price = new ParsePrice(this);
         ParseNews news = new ParseNews(this);
@@ -51,6 +53,25 @@ public class HomeActivity extends AppCompatActivity implements NewsFetcherInterf
         price.execute(btcPriceUrl);
         news.execute(newsUrl);
         currPrice.execute(currPriceUrl);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.home_menu, menu);
+        return true;
+    }
+
+    // handle button activities
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.makePrediction) {
+            Log.i("MENU", "it works.");
+            startActivity(new Intent(this, PredictionListActivity.class));
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -94,8 +115,5 @@ public class HomeActivity extends AppCompatActivity implements NewsFetcherInterf
 
     @Override
     public void onClick(View view) {
-        if (view == buttonPredict) {
-            startActivity(new Intent(this, PredictionListActivity.class));
-        }
     }
 }
