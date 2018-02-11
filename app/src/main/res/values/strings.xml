@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Crowdsourcing Cryptocurrency Prediction</string>
+    <string-array name="crypto_type">
+        <item>Bitcoin</item>
+        <item>Ethereum</item>
+        <item>Ripple"</item>
+        <item>Lirecoin</item>
+    </string-array>
+    <string-array name="prediction_type">
+        <item>7day</item>
+        <item>1days</item>
+        <item>6hour"</item>
+        <item>1hour</item>
+    </string-array>
 </resources>

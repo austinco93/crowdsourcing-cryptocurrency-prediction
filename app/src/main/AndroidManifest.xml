@@ -11,17 +11,25 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".HomeActivity"
-            android:label="Home"></activity>
+            android:label="Home" />
         <activity
             android:name=".admin.AdminActivity"
-            android:label="Admin"></activity>
-        <activity android:name=".SplashActivity"
+            android:label="Admin" />
+        <activity
+            android:name=".SplashActivity"
             android:label="Login/Register">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".PredictionActivity" />
+        <activity android:name=".admin.CreatePredictionEntryActivity"></activity>
+        <activity android:name=".PredictionListActivity">
+
         </activity>
     </application>
 
