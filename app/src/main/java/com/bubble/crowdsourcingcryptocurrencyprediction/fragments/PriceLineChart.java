@@ -1,5 +1,6 @@
 package com.bubble.crowdsourcingcryptocurrencyprediction.fragments;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bubble.crowdsourcingcryptocurrencyprediction.DataPoint;
+import com.bubble.crowdsourcingcryptocurrencyprediction.HomeActivity;
 import com.bubble.crowdsourcingcryptocurrencyprediction.R;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -21,6 +23,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.utils.EntryXComparator;
 
 import java.text.ParseException;
@@ -41,9 +44,9 @@ public class PriceLineChart extends Fragment {
     public static final SimpleDateFormat json_formatter = new SimpleDateFormat("yyyy-MM-dd");
     private static final SimpleDateFormat chart_formatter = new SimpleDateFormat("MM/dd");
     public static final SimpleDateFormat title_formatter = new SimpleDateFormat("MM/dd/yyyy");
-    // TODO: This is unnecessary, fix this later.
+    private PriceMarkerView mv;
+    private LineChart mChart;
     View view;
-    View outer_view;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,40 +61,47 @@ public class PriceLineChart extends Fragment {
 
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.price_linechart, container, false);
-        outer_view = inflater.inflate(R.layout.activity_home, container, false);
 
-        LineChart chart = (LineChart) view.findViewById(R.id.test_chart);
-        configureChart(chart);
-        configureAxes(chart);
+        mChart = (LineChart) view.findViewById(R.id.test_chart);
+        mChart.setMarker(mv);
+        configureChart();
+        configureAxes();
 
         // Prep data
         LineData lineData = new LineData(style_dataset(create_entries(data)));
 
         // Draw data to chart.
-        chart.setData(lineData);
-        chart.invalidate();
+        mChart.setData(lineData);
+        mChart.invalidate();
 
         return view;
     }
 
-    private void configureChart(LineChart chart) {
-        chart.setBackgroundColor(getResources().getColor(R.color.md_blue_grey_800));
-        Description d = new Description();
-        d.setText("Current Price");
-        d.setTextColor(getResources().getColor(R.color.DEFAULT_WHITE));
-        d.setTextSize(13);
-        chart.setDescription(d);
+    @Override
+    public void onAttach(Context context) {
+        mv = new PriceMarkerView(context, R.layout.price_markerview);
+        super.onAttach(context);
+
     }
 
-    private void configureAxes(LineChart chart) {
-        XAxis xAxis = chart.getXAxis();
+    private void configureChart() {
+        mChart.setBackgroundColor(getResources().getColor(R.color.md_blue_grey_800));
+
+        // Getting rid of the chart label... lol
+        Description d = new Description();
+        d.setText("");
+        mChart.setDescription(d);
+    }
+
+    private void configureAxes() {
+        XAxis xAxis = mChart.getXAxis();
         xAxis.setDrawGridLines(false);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setTextColor(getResources().getColor(R.color.DEFAULT_WHITE));
         xAxis.setValueFormatter(new MyXAxisValueFormatter());
 
-        YAxis yAxis = chart.getAxis(YAxis.AxisDependency.LEFT);
-        chart.getAxisRight().setEnabled(false);
+        YAxis yAxis = mChart.getAxis(YAxis.AxisDependency.LEFT);
+        mChart.getAxisRight().setEnabled(false);
         yAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
         yAxis.setTextColor(getResources().getColor(R.color.DEFAULT_WHITE));
         yAxis.setDrawLabels(true);
@@ -119,11 +129,8 @@ public class PriceLineChart extends Fragment {
 
     // TODO: Broken. Ask Monsur for help :^)
     private void setChartTitle(float uts) {
-        String last_date = title_formatter.format(uts);
-
-        TextView textviewTitle = (TextView) outer_view.findViewById(R.id.btc_chart_title);
-        textviewTitle.setText("BTC Closing Prices Since "+last_date);
-        textviewTitle.setTextColor(getResources().getColor(R.color.WHITE));
+        HomeActivity.textviewTitle.setText("BTC Closing Prices Since "+title_formatter.format(uts));
+        HomeActivity.textviewTitle.setTextColor(getResources().getColor(R.color.WHITE));
     }
 
     private float string_to_UTS(String date_str) {

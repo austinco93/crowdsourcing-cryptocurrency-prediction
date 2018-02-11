@@ -34,7 +34,7 @@ public class HomeActivity extends AppCompatActivity implements NewsFetcherInterf
     public static String cryptoUrl2;
     public static HashMap<String,String> prices = new HashMap<String,String>();
     public static ArrayList<HashMap<String,String>> articles = new ArrayList<HashMap<String,String>>();
-    TextView textviewTitle;
+    public static TextView textviewTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
