@@ -1,8 +1,6 @@
 package com.bubble.crowdsourcingcryptocurrencyprediction;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,33 +11,27 @@ import android.widget.TextView;
 
 import com.bubble.crowdsourcingcryptocurrencyprediction.fragments.NewsFragment;
 import com.bubble.crowdsourcingcryptocurrencyprediction.fragments.PriceLineChart;
+import com.bubble.crowdsourcingcryptocurrencyprediction.utilities.CurrPriceFetcherInterface;
 import com.bubble.crowdsourcingcryptocurrencyprediction.utilities.NewsFetcherInterface;
+import com.bubble.crowdsourcingcryptocurrencyprediction.utilities.ParseCurrPrice;
 import com.bubble.crowdsourcingcryptocurrencyprediction.utilities.ParseNews;
 import com.bubble.crowdsourcingcryptocurrencyprediction.utilities.ParsePrice;
 import com.bubble.crowdsourcingcryptocurrencyprediction.utilities.PriceFetcherInterface;
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.Description;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.utils.EntryXComparator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 
-public class HomeActivity extends AppCompatActivity implements NewsFetcherInterface, PriceFetcherInterface, View.OnClickListener {
-    public static String newsUrl;
-    public static String cryptoUrl;
-    public static String cryptoUrl2;
+public class HomeActivity extends AppCompatActivity implements NewsFetcherInterface,
+        PriceFetcherInterface, CurrPriceFetcherInterface, View.OnClickListener {
+    public static final String newsUrl = "https://newsapi.org/v2/everything?q=bitcoin&language=en&sortBy=publishedAt&apiKey=66b0258bac8c46a080eeac9e80af22f2",
+            currPriceUrl = "https://api.coinmarketcap.com/v1/ticker?limit=4",
+            btcPriceUrl = "https://api.coindesk.com/v1/bpi/historical/close.json";
     public static HashMap<String, String> prices = new HashMap<String, String>();
-    public static ArrayList<HashMap<String, String>> articles = new ArrayList<HashMap<String, String>>();
+    public static ArrayList<HashMap<String, String>> articles = new ArrayList<HashMap<String,
+            String>>(), coins = new ArrayList<HashMap<String, String>>();
     public static TextView textviewTitle;
     Button buttonPredict;
 
@@ -49,20 +41,16 @@ public class HomeActivity extends AppCompatActivity implements NewsFetcherInterf
         setContentView(R.layout.activity_home);
         ImageLoader imageLoader = ImageLoader.getInstance();
         imageLoader.init(ImageLoaderConfiguration.createDefault(this));
-        newsUrl = "https://newsapi.org/v2/everything?q=bitcoin&language=en&sortBy=publishedAt&apiKey=66b0258bac8c46a080eeac9e80af22f2";
         textviewTitle = (TextView) findViewById(R.id.btc_chart_title);
         buttonPredict = (Button) findViewById(R.id.buttonPredict);
         buttonPredict.setOnClickListener(this);
 
-        //newsUrl = "https://newsapi.org/v2/everything?q=bitcoin&sortBy=publishedAt&apiKey=66b0258bac8c46a080eeac9e80af22f2";
-        cryptoUrl = "https://api.coinmarketcap.com/v1/ticker/bitcoin";
-        cryptoUrl2 = "https://api.coindesk.com/v1/bpi/historical/close.json";
-
-
         ParsePrice price = new ParsePrice(this);
         ParseNews news = new ParseNews(this);
-        price.execute(cryptoUrl2);
+        ParseCurrPrice currPrice = new ParseCurrPrice(this);
+        price.execute(btcPriceUrl);
         news.execute(newsUrl);
+        currPrice.execute(currPriceUrl);
     }
 
     @Override
@@ -81,6 +69,12 @@ public class HomeActivity extends AppCompatActivity implements NewsFetcherInterf
         transaction.commit();
     }
 
+
+    @Override
+    public void onCurrPriceFinishFetcher(ArrayList<HashMap<String, String>> data) {
+        coins = data;
+        Log.i("name", data.get(1).get("name"));
+    }
 
     @Override
     public void onNewsFinishFetcher(ArrayList<HashMap<String, String>> data) {

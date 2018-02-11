@@ -63,6 +63,7 @@ public class PriceLineChart extends Fragment {
         mChart = (LineChart) view.findViewById(R.id.test_chart);
         mChart.setMarker(mv);
 
+        // Styling
         configureChart();
         configureAxes();
 
